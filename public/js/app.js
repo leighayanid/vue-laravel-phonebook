@@ -42467,6 +42467,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['openmodal'],
@@ -42476,7 +42479,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				name: '',
 				contact_number: '',
 				email: ''
-			}
+			},
+			errors: {}
 		};
 	},
 
@@ -42490,7 +42494,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post('/contact', this.$data.list).then(function (response) {
 				return _this.closeModal();
 			}).catch(function (error) {
-				return console.log(error);
+				return _this.errors = error.response.data.errors;
 			});
 		}
 	}
@@ -42535,6 +42539,7 @@ var render = function() {
                 }
               ],
               staticClass: "input",
+              class: { "is-danger": _vm.errors.name },
               attrs: { type: "text", placeholder: "Input your name" },
               domProps: { value: _vm.list.name },
               on: {
@@ -42546,7 +42551,13 @@ var render = function() {
                 }
               }
             })
-          ])
+          ]),
+          _vm._v(" "),
+          _vm.errors.name
+            ? _c("small", { staticClass: "has-text-danger" }, [
+                _vm._v(" " + _vm._s(_vm.errors.name[0]))
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "field" }, [
@@ -42563,6 +42574,7 @@ var render = function() {
                 }
               ],
               staticClass: "input",
+              class: { "is-danger": _vm.errors.contact_number },
               attrs: { type: "text", placeholder: "Input your contact number" },
               domProps: { value: _vm.list.contact_number },
               on: {
@@ -42574,7 +42586,13 @@ var render = function() {
                 }
               }
             })
-          ])
+          ]),
+          _vm._v(" "),
+          _vm.errors.contact_number
+            ? _c("small", { staticClass: "has-text-danger" }, [
+                _vm._v(" " + _vm._s(_vm.errors.contact_number[0]))
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "field" }, [
@@ -42591,6 +42609,7 @@ var render = function() {
                 }
               ],
               staticClass: "input",
+              class: { "is-danger": _vm.errors.email },
               attrs: { type: "email", placeholder: "Input your email address" },
               domProps: { value: _vm.list.email },
               on: {
@@ -42602,7 +42621,13 @@ var render = function() {
                 }
               }
             })
-          ])
+          ]),
+          _vm._v(" "),
+          _vm.errors.email
+            ? _c("small", { staticClass: "has-text-danger" }, [
+                _vm._v(" " + _vm._s(_vm.errors.email[0]))
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
