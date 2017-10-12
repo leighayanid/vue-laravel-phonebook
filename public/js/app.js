@@ -42483,6 +42483,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	methods: {
 		closeModal: function closeModal() {
 			this.$emit('closeRequest');
+		},
+		onSaveContact: function onSaveContact() {
+			var _this = this;
+
+			axios.post('/contact', this.$data.list).then(function (response) {
+				return _this.closeModal();
+			}).catch(function (error) {
+				return console.log(error);
+			});
 		}
 	}
 });
@@ -42582,7 +42591,7 @@ var render = function() {
                 }
               ],
               staticClass: "input",
-              attrs: { type: "text", placeholder: "Input your email address" },
+              attrs: { type: "email", placeholder: "Input your email address" },
               domProps: { value: _vm.list.email },
               on: {
                 input: function($event) {
@@ -42598,9 +42607,14 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("footer", { staticClass: "modal-card-foot" }, [
-        _c("button", { staticClass: "button is-success" }, [
-          _vm._v("Save changes")
-        ]),
+        _c(
+          "button",
+          {
+            staticClass: "button is-success",
+            on: { click: _vm.onSaveContact }
+          },
+          [_vm._v("Save changes")]
+        ),
         _vm._v(" "),
         _c("button", { staticClass: "button", on: { click: _vm.closeModal } }, [
           _vm._v("Cancel")

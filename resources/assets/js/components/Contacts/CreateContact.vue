@@ -23,13 +23,13 @@
 				<div class="field">
 				  <label class="label">Email Address</label>
 				  <div class="control">
-				    <input class="input" type="text" placeholder="Input your email address" v-model="list.email">
+				    <input class="input" type="email" placeholder="Input your email address" v-model="list.email">
 				  </div>
 				</div>
 
 	    </section>
 	    <footer class="modal-card-foot">
-	      <button class="button is-success">Save changes</button>
+	      <button class="button is-success" @click='onSaveContact'>Save changes</button>
 	      <button class="button" @click='closeModal'>Cancel</button>
 	    </footer>
 	  </div>
@@ -51,6 +51,10 @@
 		methods: {
 			closeModal() {
 				this.$emit('closeRequest')
+			},
+			onSaveContact(){
+				axios.post('/contact', this.$data.list).then((response)=> this.closeModal())
+					.catch((error)=> console.log(error))
 			}
 		}
 	}
