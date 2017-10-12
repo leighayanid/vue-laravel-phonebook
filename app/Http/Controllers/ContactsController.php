@@ -44,6 +44,12 @@ class ContactsController extends Controller
 
     }
 
+    /*
+
+    */
+    public function getContactListData(){
+        return Contacts::orderBy('name', 'DESC')->get();
+    }
     /**
      * Display the specified resource.
      *

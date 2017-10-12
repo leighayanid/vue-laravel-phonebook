@@ -15,11 +15,11 @@
         </span>
       </p>
     </div>
-    <a class="panel-block">
+    <a class="panel-block" v-for="contact,key in contactLists">
       <span class="panel-icon">
         <i class="fa fa-book"></i>
       </span>
-      bulma
+      {{ contact.name }}
     </a>
     </nav>
     <!-- pass modal data via props -->
@@ -30,9 +30,16 @@
 <script>
   let CreateContact = require('./Contacts/CreateContact.vue')
   export default{
+    /*fetch data from the database once the vue has been mounted using axios*/
+    mounted(){
+      axios.post('/getContactListData')
+        .then((response)=> this.contactLists = response.data)
+        .catch((error)=> this.errors = error.response.data.errors)
+    },
     data() {
       return{
-        addActive: ''
+        addActive: '',
+        contactLists: {}
       }
     },
     components: {

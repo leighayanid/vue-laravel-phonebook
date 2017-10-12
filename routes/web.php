@@ -20,4 +20,5 @@ Route::get('/{name}', function(){
 })->where('name', '[A-Za-z]+');
 
 Route::resource('contact', 'ContactsController');
+Route::post('getContactListData', 'ContactsController@getContactListData');
 

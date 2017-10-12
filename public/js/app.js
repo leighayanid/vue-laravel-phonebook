@@ -42358,9 +42358,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var CreateContact = __webpack_require__(42);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  /*fetch data from the database once the vue has been mounted using axios*/
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.post('/getContactListData').then(function (response) {
+      return _this.contactLists = response.data;
+    }).catch(function (error) {
+      return _this.errors = error.response.data.errors;
+    });
+  },
   data: function data() {
     return {
-      addActive: ''
+      addActive: '',
+      contactLists: {}
     };
   },
 
@@ -42669,23 +42680,33 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("nav", { staticClass: "panel column is-8 is-offset-2" }, [
-        _c("p", { staticClass: "panel-heading" }, [
-          _vm._v("\n    VueJS Phonebook\n    "),
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary",
-              on: { click: _vm.openCreateModalForm }
-            },
-            [_vm._v("\n      New contact\n    ")]
-          )
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._m(1)
-      ]),
+      _c(
+        "nav",
+        { staticClass: "panel column is-8 is-offset-2" },
+        [
+          _c("p", { staticClass: "panel-heading" }, [
+            _vm._v("\n    VueJS Phonebook\n    "),
+            _c(
+              "button",
+              {
+                staticClass: "button is-primary",
+                on: { click: _vm.openCreateModalForm }
+              },
+              [_vm._v("\n      New contact\n    ")]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._l(_vm.contactLists, function(contact, key) {
+            return _c("a", { staticClass: "panel-block" }, [
+              _vm._m(1, true),
+              _vm._v("\n    " + _vm._s(contact.name) + "\n  ")
+            ])
+          })
+        ],
+        2
+      ),
       _vm._v(" "),
       _c("CreateContact", {
         attrs: { openmodal: _vm.addActive },
@@ -42717,11 +42738,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "panel-block" }, [
-      _c("span", { staticClass: "panel-icon" }, [
-        _c("i", { staticClass: "fa fa-book" })
-      ]),
-      _vm._v("\n    bulma\n  ")
+    return _c("span", { staticClass: "panel-icon" }, [
+      _c("i", { staticClass: "fa fa-book" })
     ])
   }
 ]
