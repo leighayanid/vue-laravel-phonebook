@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
-use App\Contacts;
+use App\Contact;
 
 class ContactsController extends Controller
 {
@@ -36,7 +36,7 @@ class ContactsController extends Controller
      */
     public function store(ContactRequest $request)
     {
-        $contact = new Contacts();
+        $contact = new Contact();
         $contact->name = $request->name;
         $contact->contact_number = $request->contact_number;
         $contact->email = $request->email;
@@ -48,7 +48,7 @@ class ContactsController extends Controller
 
     */
     public function getContactListData(){
-        return Contacts::orderBy('name', 'DESC')->get();
+        return Contact::orderBy('id', 'DESC')->get();
     }
     /**
      * Display the specified resource.

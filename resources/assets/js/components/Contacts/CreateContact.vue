@@ -29,7 +29,6 @@
 				  </div>
 				  <small v-if="errors.email" class="has-text-danger"> {{ errors.email[0] }}</small>
 				</div>
-
 	    </section>
 	    <footer class="modal-card-foot">
 	      <button class="button is-success" @click='onSaveContact'>Save changes</button>

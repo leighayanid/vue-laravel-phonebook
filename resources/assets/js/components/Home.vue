@@ -31,7 +31,7 @@
   let CreateContact = require('./Contacts/CreateContact.vue')
   export default{
     /*fetch data from the database once the vue has been mounted using axios*/
-    mounted(){
+    created(){
       axios.post('/getContactListData')
         .then((response)=> this.contactLists = response.data)
         .catch((error)=> this.errors = error.response.data.errors)

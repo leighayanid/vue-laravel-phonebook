@@ -42359,7 +42359,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var CreateContact = __webpack_require__(42);
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*fetch data from the database once the vue has been mounted using axios*/
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
     axios.post('/getContactListData').then(function (response) {
