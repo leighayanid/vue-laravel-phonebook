@@ -42355,6 +42355,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 var CreateContact = __webpack_require__(42);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -42440,7 +42448,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -42700,8 +42707,15 @@ var render = function() {
           _vm._v(" "),
           _vm._l(_vm.contactLists, function(contact, key) {
             return _c("a", { staticClass: "panel-block" }, [
+              _c("span", { staticClass: "column is-9" }, [
+                _vm._v("\n      " + _vm._s(contact.name) + "\n    ")
+              ]),
+              _vm._v(" "),
               _vm._m(1, true),
-              _vm._v("\n    " + _vm._s(contact.name) + "\n  ")
+              _vm._v(" "),
+              _vm._m(2, true),
+              _vm._v(" "),
+              _vm._m(3, true)
             ])
           })
         ],
@@ -42725,7 +42739,7 @@ var staticRenderFns = [
       _c("p", { staticClass: "control has-icons-left" }, [
         _c("input", {
           staticClass: "input is-small",
-          attrs: { type: "text", placeholder: "search" }
+          attrs: { type: "text", placeholder: "Search here" }
         }),
         _vm._v(" "),
         _c("span", { staticClass: "icon is-small is-left" }, [
@@ -42738,8 +42752,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "panel-icon" }, [
-      _c("i", { staticClass: "fa fa-book" })
+    return _c("span", { staticClass: "column panel-icon is-1" }, [
+      _c("i", { staticClass: "fa fa-trash has-text-danger" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "column panel-icon is-1" }, [
+      _c("i", { staticClass: "fa fa-edit has-text-info" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "column panel-icon" }, [
+      _c("i", { staticClass: "fa fa-eye is-1 has-text-primary" })
     ])
   }
 ]
