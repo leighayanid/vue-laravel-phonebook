@@ -42363,8 +42363,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 var CreateContact = __webpack_require__(42);
+var ShowContact = __webpack_require__(60);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*fetch data from the database once the vue has been mounted using axios*/
   created: function created() {
@@ -42379,19 +42387,28 @@ var CreateContact = __webpack_require__(42);
   data: function data() {
     return {
       addActive: '',
+      showActive: '',
       contactLists: {}
     };
   },
 
   components: {
-    CreateContact: CreateContact
+    CreateContact: CreateContact,
+    ShowContact: ShowContact
   },
   methods: {
     openCreateModalForm: function openCreateModalForm() {
       this.addActive = 'is-active';
     },
-    close: function close() {
+    openShowModal: function openShowModal(key) {
+      this.$children[1].list = this.contactLists[key];
+      this.showActive = 'is-active';
+    },
+    closeModalForm: function closeModalForm() {
       this.addActive = '';
+    },
+    closeShowModal: function closeShowModal() {
+      this.showActive = '';
     }
   }
 });
@@ -42708,14 +42725,29 @@ var render = function() {
           _vm._l(_vm.contactLists, function(contact, key) {
             return _c("a", { staticClass: "panel-block" }, [
               _c("span", { staticClass: "column is-9" }, [
-                _vm._v("\n      " + _vm._s(contact.name) + "\n    ")
+                _vm._v("\n      " + _vm._s(contact.name) + "\n      "),
+                _c("br"),
+                _vm._v(" "),
+                _vm._m(1, true),
+                _c("small", [_vm._v(" " + _vm._s(contact.contact_number))])
               ]),
-              _vm._v(" "),
-              _vm._m(1, true),
               _vm._v(" "),
               _vm._m(2, true),
               _vm._v(" "),
-              _vm._m(3, true)
+              _vm._m(3, true),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "column panel-icon",
+                  on: {
+                    click: function($event) {
+                      _vm.openShowModal(key)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-eye is-1 has-text-primary" })]
+              )
             ])
           })
         ],
@@ -42724,7 +42756,12 @@ var render = function() {
       _vm._v(" "),
       _c("CreateContact", {
         attrs: { openmodal: _vm.addActive },
-        on: { closeRequest: _vm.close }
+        on: { closeRequest: _vm.closeModalForm }
+      }),
+      _vm._v(" "),
+      _c("ShowContact", {
+        attrs: { showmodal: _vm.showActive },
+        on: { closeRequest: _vm.closeShowModal }
       })
     ],
     1
@@ -42738,7 +42775,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "panel-block" }, [
       _c("p", { staticClass: "control has-icons-left" }, [
         _c("input", {
-          staticClass: "input is-small",
+          staticClass: "input is-medium",
           attrs: { type: "text", placeholder: "Search here" }
         }),
         _vm._v(" "),
@@ -42746,6 +42783,14 @@ var staticRenderFns = [
           _c("i", { staticClass: "fa fa-search" })
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon is-small is-left" }, [
+      _c("i", { staticClass: "fa fa-microphone" })
     ])
   },
   function() {
@@ -42762,14 +42807,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "column panel-icon is-1" }, [
       _c("i", { staticClass: "fa fa-edit has-text-info" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "column panel-icon" }, [
-      _c("i", { staticClass: "fa fa-eye is-1 has-text-primary" })
     ])
   }
 ]
@@ -42919,6 +42956,158 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(62)
+/* template */
+var __vue_template__ = __webpack_require__(61)
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Contacts\\ShowContact.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ShowContact.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3a88d2d1", Component.options)
+  } else {
+    hotAPI.reload("data-v-3a88d2d1", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "modal", class: _vm.showmodal }, [
+    _c("div", { staticClass: "modal-background" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal-card" }, [
+      _c("header", { staticClass: "modal-card-head" }, [
+        _c("p", { staticClass: "modal-card-title" }, [
+          _vm._v("Contact Details")
+        ]),
+        _vm._v(" "),
+        _c("button", {
+          staticClass: "delete",
+          attrs: { "aria-label": "close" },
+          on: { click: _vm.onClose }
+        })
+      ]),
+      _vm._v(" "),
+      _c("section", { staticClass: "modal-card-body" }, [
+        _c("p", [_vm._v(" " + _vm._s(_vm.list.name))]),
+        _c("br"),
+        _vm._v(" "),
+        _c("p", [_vm._v(" " + _vm._s(_vm.list.contact_number))]),
+        _c("br"),
+        _vm._v(" "),
+        _c("p", [_vm._v(" " + _vm._s(_vm.list.email))]),
+        _c("br")
+      ]),
+      _vm._v(" "),
+      _c("footer", { staticClass: "modal-card-foot" }, [
+        _c(
+          "button",
+          { staticClass: "button is-success", on: { click: _vm.onClose } },
+          [_vm._v("Okay")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3a88d2d1", module.exports)
+  }
+}
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['showmodal'],
+	data: function data() {
+		return {
+			list: ''
+		};
+	},
+
+	methods: {
+		onClose: function onClose() {
+			this.$emit('closeRequest');
+		}
+	}
+});
 
 /***/ })
 /******/ ]);
