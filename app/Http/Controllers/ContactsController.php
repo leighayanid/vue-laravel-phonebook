@@ -41,6 +41,7 @@ class ContactsController extends Controller
         $contact->contact_number = $request->contact_number;
         $contact->email = $request->email;
         $contact->save();
+        return $contact;
 
     }
 

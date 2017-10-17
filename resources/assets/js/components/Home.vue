@@ -6,6 +6,9 @@
       <button class="button is-primary" @click="openCreateModalForm">
         New contact
       </button>
+      <span class="is-pulled-right " v-if="loading">
+        <i class="fa fa-refresh fa-spin"></i>
+      </span>
     </p>
     <div class="panel-block">
       <p class="control has-icons-left">
@@ -60,7 +63,8 @@
         contactLists: {},
         addActive: '',
         showActive: '',
-        updateActive:''
+        updateActive:'',
+        loading: false
       }
     },
     components: {
@@ -83,8 +87,13 @@
       deleteContact(key,id){
         // console.log(`${key} ${id}`)
         if (confirm("Are you sure you want to delete this contact?")) {
+          this.loading = !this.loading
           axios.delete(`/contact/${id}`)
-            .then((response)=> this.contactLists.splice(key,1))
+            .then((response)=> {
+              this.contactLists.splice(key,1);
+              this.loading = !this.loading;   
+              }
+            )
             .catch((error)=> this.errors = error.response.data.errors)
         }
       },

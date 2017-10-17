@@ -42370,6 +42370,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 var CreateContact = __webpack_require__(42);
@@ -42392,7 +42395,8 @@ var UpdateContact = __webpack_require__(48);
       contactLists: {},
       addActive: '',
       showActive: '',
-      updateActive: ''
+      updateActive: '',
+      loading: false
     };
   },
 
@@ -42418,8 +42422,10 @@ var UpdateContact = __webpack_require__(48);
 
       // console.log(`${key} ${id}`)
       if (confirm("Are you sure you want to delete this contact?")) {
+        this.loading = !this.loading;
         axios.delete('/contact/' + id).then(function (response) {
-          return _this2.contactLists.splice(key, 1);
+          _this2.contactLists.splice(key, 1);
+          _this2.loading = !_this2.loading;
         }).catch(function (error) {
           return _this2.errors = error.response.data.errors;
         });
@@ -42545,7 +42551,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this = this;
 
 			axios.post('/contact', this.$data.list).then(function (response) {
-				return _this.closeModal();
+				_this.closeModal();
+				_this.$parent.contactLists.push(response.data);
 			}).catch(function (error) {
 				return _this.errors = error.response.data.errors;
 			});
@@ -43154,7 +43161,13 @@ var render = function() {
                 on: { click: _vm.openCreateModalForm }
               },
               [_vm._v("\n      New contact\n    ")]
-            )
+            ),
+            _vm._v(" "),
+            _vm.loading
+              ? _c("span", { staticClass: "is-pulled-right " }, [
+                  _c("i", { staticClass: "fa fa-refresh fa-spin" })
+                ])
+              : _vm._e()
           ]),
           _vm._v(" "),
           _vm._m(0),

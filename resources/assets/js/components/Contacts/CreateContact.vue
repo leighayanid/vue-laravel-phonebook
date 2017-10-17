@@ -57,7 +57,10 @@
 			},
 			onSaveContact(){
 				axios.post('/contact', this.$data.list)
-					.then((response)=> this.closeModal())
+					.then((response)=> {
+						this.closeModal()
+						this.$parent.contactLists.push(response.data)
+					})
 					.catch((error)=> this.errors = error.response.data.errors)
 			}
 		}
