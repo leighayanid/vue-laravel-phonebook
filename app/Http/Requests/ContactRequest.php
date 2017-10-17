@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class ContactRequest extends FormRequest
 {
@@ -21,12 +22,12 @@ class ContactRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             'name' => 'required|max:255',
             'contact_number' => 'required|max:12',
-            'email' => 'required|email'
+            'email' => 'required|email|unique:contacts,email,'.$request->id
         ];
     }
 }

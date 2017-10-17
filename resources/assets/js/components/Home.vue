@@ -24,10 +24,10 @@
         </span><small> {{ contact.contact_number }}</small>
       </span>
       <span class="column panel-icon is-1">
-        <i class="fa fa-trash has-text-danger"></i>
+        <i class="fa fa-trash has-text-danger" @click="deleteContact(key,contact.id)"></i>
       </span>
       <span class="column panel-icon is-1">
-        <i class="fa fa-edit has-text-info"></i>
+        <i class="fa fa-edit has-text-info" @click="openUpdateModal(key)"></i>
       </span>
       <span class="column panel-icon" @click="openShowModal(key)">
         <i class="fa fa-eye is-1 has-text-primary"></i>
@@ -35,8 +35,10 @@
     </a>
     </nav>
     <!-- pass modal data via props -->
-    <CreateContact :openmodal='addActive' @closeRequest='closeModalForm'></CreateContact>
-    <ShowContact :showmodal='showActive' @closeRequest='closeShowModal'></ShowContact>
+    <CreateContact :openmodal='addActive' @closeRequest='close'></CreateContact>
+    <ShowContact :showmodal='showActive' @closeRequest='close'></ShowContact>
+    <UpdateContact :updatemodal='updateActive' @closeRequest='close'></UpdateContact>
+
   </div>
 </template>
 
@@ -44,6 +46,7 @@
 
   let CreateContact = require('./Contacts/CreateContact.vue')
   let ShowContact = require('./Contacts/ShowContact.vue')
+  let UpdateContact = require('./Contacts/UpdateContact.vue')
 
   export default{
     /*fetch data from the database once the vue has been mounted using axios*/
@@ -54,14 +57,16 @@
     },
     data() {
       return{
+        contactLists: {},
         addActive: '',
         showActive: '',
-        contactLists: {}
+        updateActive:''
       }
     },
     components: {
       CreateContact,
-      ShowContact
+      ShowContact,
+      UpdateContact
     },
     methods: {
       openCreateModalForm() {
@@ -71,11 +76,20 @@
         this.$children[1].list = this.contactLists[key]
         this.showActive = 'is-active'
       },
-      closeModalForm() {
-        this.addActive = ''
+      openUpdateModal(key){
+        this.$children[2].list = this.contactLists[key]
+        this.updateActive = 'is-active'
       },
-      closeShowModal(){
-        this.showActive = ''
+      deleteContact(key,id){
+        // console.log(`${key} ${id}`)
+        if (confirm("Are you sure you want to delete this contact?")) {
+          axios.delete(`/contact/${id}`)
+            .then((response)=> this.contactLists.splice(key,1))
+            .catch((error)=> this.errors = error.response.data.errors)
+        }
+      },
+      close() {
+        this.addActive = this.showActive = this.updateActive = '' 
       }
     }
   }
