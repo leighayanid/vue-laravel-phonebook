@@ -42385,7 +42385,7 @@ var UpdateContact = __webpack_require__(48);
     var _this = this;
 
     axios.post('/getContactListData').then(function (response) {
-      return _this.contactLists = response.data;
+      return _this.contactLists = _this.tempContactList = response.data;
     }).catch(function (error) {
       return _this.errors = error.response.data.errors;
     });
@@ -42396,7 +42396,9 @@ var UpdateContact = __webpack_require__(48);
       addActive: '',
       showActive: '',
       updateActive: '',
-      loading: false
+      loading: false,
+      searchQuery: '',
+      tempContactList: ''
     };
   },
 
@@ -42404,6 +42406,19 @@ var UpdateContact = __webpack_require__(48);
     CreateContact: CreateContact,
     ShowContact: ShowContact,
     UpdateContact: UpdateContact
+  },
+  watch: {
+    searchQuery: function searchQuery() {
+      var _this2 = this;
+
+      if (this.searchQuery.length > 0) {
+        this.tempContactList = this.contactLists.filter(function (index) {
+          return index.name.toLowerCase().indexOf(_this2.searchQuery.toLowerCase()) > -1;
+        });
+      } else {
+        this.tempContactList = this.contactLists;
+      }
+    }
   },
   methods: {
     openCreateModalForm: function openCreateModalForm() {
@@ -42418,16 +42433,16 @@ var UpdateContact = __webpack_require__(48);
       this.updateActive = 'is-active';
     },
     deleteContact: function deleteContact(key, id) {
-      var _this2 = this;
+      var _this3 = this;
 
       // console.log(`${key} ${id}`)
       if (confirm("Are you sure you want to delete this contact?")) {
         this.loading = !this.loading;
         axios.delete('/contact/' + id).then(function (response) {
-          _this2.contactLists.splice(key, 1);
-          _this2.loading = !_this2.loading;
+          _this3.contactLists.splice(key, 1);
+          _this3.loading = !_this3.loading;
         }).catch(function (error) {
-          return _this2.errors = error.response.data.errors;
+          return _this3.errors = error.response.data.errors;
         });
       }
     },
@@ -43178,9 +43193,35 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { staticClass: "panel-block" }, [
+            _c("p", { staticClass: "control has-icons-left" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchQuery,
+                    expression: "searchQuery"
+                  }
+                ],
+                staticClass: "input is-medium",
+                attrs: { type: "text", placeholder: "Search here" },
+                domProps: { value: _vm.searchQuery },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuery = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]),
           _vm._v(" "),
-          _vm._l(_vm.contactLists, function(contact, key) {
+          _vm._l(_vm.tempContactList, function(contact, key) {
             return _c("a", { staticClass: "panel-block" }, [
               _c("span", { staticClass: "column is-9" }, [
                 _vm._v("\n      " + _vm._s(contact.name) + "\n      "),
@@ -43253,17 +43294,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-block" }, [
-      _c("p", { staticClass: "control has-icons-left" }, [
-        _c("input", {
-          staticClass: "input is-medium",
-          attrs: { type: "text", placeholder: "Search here" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon is-small is-left" }, [
-          _c("i", { staticClass: "fa fa-search" })
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-small is-left" }, [
+      _c("i", { staticClass: "fa fa-search" })
     ])
   },
   function() {

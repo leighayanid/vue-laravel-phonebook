@@ -12,13 +12,13 @@
     </p>
     <div class="panel-block">
       <p class="control has-icons-left">
-        <input class="input is-medium" type="text" placeholder="Search here">
+        <input class="input is-medium" type="text" placeholder="Search here" v-model="searchQuery">
         <span class="icon is-small is-left">
           <i class="fa fa-search"></i>
         </span>
       </p>
     </div>
-    <a class="panel-block" v-for="contact,key in contactLists">
+    <a class="panel-block" v-for="contact,key in tempContactList">
       <span class="column is-9">
         {{ contact.name }}
         <br>
@@ -55,7 +55,7 @@
     /*fetch data from the database once the vue has been mounted using axios*/
     created(){
       axios.post('/getContactListData')
-        .then((response)=> this.contactLists = response.data)
+        .then((response)=> this.contactLists = this.tempContactList = response.data)
         .catch((error)=> this.errors = error.response.data.errors)
     },
     data() {
@@ -64,13 +64,26 @@
         addActive: '',
         showActive: '',
         updateActive:'',
-        loading: false
+        loading: false,
+        searchQuery: '',
+        tempContactList: ''
       }
     },
     components: {
       CreateContact,
       ShowContact,
       UpdateContact
+    },
+    watch:{
+      searchQuery(){
+        if (this.searchQuery.length > 0) {
+          this.tempContactList = this.contactLists.filter((index) => {
+            return index.name.toLowerCase().indexOf(this.searchQuery.toLowerCase())>-1;
+          })
+        }else{
+          this.tempContactList = this.contactLists
+        }
+      }
     },
     methods: {
       openCreateModalForm() {
