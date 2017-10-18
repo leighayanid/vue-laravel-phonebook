@@ -60,6 +60,14 @@
 					.then((response)=> {
 						this.closeModal()
 						this.$parent.contactLists.push(response.data)
+						this.$parent.contactLists.sort(function(a,b){
+							if(a.name > b.name){
+								return -1;
+							}else if(a.name < b.name){
+								return +1;
+							}
+						})
+						this.list = ""
 					})
 					.catch((error)=> this.errors = error.response.data.errors)
 			}

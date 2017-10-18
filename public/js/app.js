@@ -42553,6 +42553,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post('/contact', this.$data.list).then(function (response) {
 				_this.closeModal();
 				_this.$parent.contactLists.push(response.data);
+				_this.$parent.contactLists.sort(function (a, b) {
+					if (a.name > b.name) {
+						return -1;
+					} else if (a.name < b.name) {
+						return +1;
+					}
+				});
+				_this.list = "";
 			}).catch(function (error) {
 				return _this.errors = error.response.data.errors;
 			});
