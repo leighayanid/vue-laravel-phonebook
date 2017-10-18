@@ -42413,7 +42413,10 @@ var UpdateContact = __webpack_require__(48);
 
       if (this.searchQuery.length > 0) {
         this.tempContactList = this.contactLists.filter(function (index) {
-          return index.name.toLowerCase().indexOf(_this2.searchQuery.toLowerCase()) > -1;
+          return Object.keys(index).some(function (key) {
+            var string = String(index[key]);
+            return string.toLowerCase().indexOf(_this2.searchQuery.toLowerCase()) > -1;
+          });
         });
       } else {
         this.tempContactList = this.contactLists;
@@ -42425,11 +42428,11 @@ var UpdateContact = __webpack_require__(48);
       this.addActive = 'is-active';
     },
     openShowModal: function openShowModal(key) {
-      this.$children[1].list = this.contactLists[key];
+      this.$children[1].list = this.tempContactList[key];
       this.showActive = 'is-active';
     },
     openUpdateModal: function openUpdateModal(key) {
-      this.$children[2].list = this.contactLists[key];
+      this.$children[2].list = this.tempContactList[key];
       this.updateActive = 'is-active';
     },
     deleteContact: function deleteContact(key, id) {

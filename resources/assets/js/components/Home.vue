@@ -78,7 +78,10 @@
       searchQuery(){
         if (this.searchQuery.length > 0) {
           this.tempContactList = this.contactLists.filter((index) => {
-            return index.name.toLowerCase().indexOf(this.searchQuery.toLowerCase())>-1;
+            return Object.keys(index).some((key)=>{
+              let string = String(index[key])
+              return string.toLowerCase().indexOf(this.searchQuery.toLowerCase())>-1;
+            })
           })
         }else{
           this.tempContactList = this.contactLists
@@ -90,11 +93,11 @@
         this.addActive = 'is-active'
       },
       openShowModal(key){
-        this.$children[1].list = this.contactLists[key]
+        this.$children[1].list = this.tempContactList[key]
         this.showActive = 'is-active'
       },
       openUpdateModal(key){
-        this.$children[2].list = this.contactLists[key]
+        this.$children[2].list = this.tempContactList[key]
         this.updateActive = 'is-active'
       },
       deleteContact(key,id){
