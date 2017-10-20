@@ -42384,8 +42384,10 @@ var UpdateContact = __webpack_require__(48);
   created: function created() {
     var _this = this;
 
+    this.loading = !this.loading;
     axios.post('/getContactListData').then(function (response) {
-      return _this.contactLists = _this.tempContactList = response.data;
+      _this.contactLists = _this.tempContactList = response.data;
+      _this.loading = !_this.loading;
     }).catch(function (error) {
       return _this.errors = error.response.data.errors;
     });

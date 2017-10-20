@@ -54,8 +54,13 @@
   export default{
     /*fetch data from the database once the vue has been mounted using axios*/
     created(){
+      this.loading = !this.loading
       axios.post('/getContactListData')
-        .then((response)=> this.contactLists = this.tempContactList = response.data)
+        .then((response)=> {
+          this.contactLists = this.tempContactList = response.data
+          this.loading = !this.loading
+        }
+        )
         .catch((error)=> this.errors = error.response.data.errors)
     },
     data() {
