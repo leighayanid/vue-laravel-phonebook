@@ -1,4 +1,5 @@
 <template>
+  <transition name="slide" mode="slide-in">
   <div>
   	<nav class="panel column is-8 is-offset-2">
     <p class="panel-heading">
@@ -37,12 +38,14 @@
       </span>
     </a>
     </nav>
+
     <!-- pass modal data via props -->
     <CreateContact :openmodal='addActive' @closeRequest='close'></CreateContact>
     <ShowContact :showmodal='showActive' @closeRequest='close'></ShowContact>
     <UpdateContact :updatemodal='updateActive' @closeRequest='close'></UpdateContact>
 
   </div>
+</transition>
 </template>
 
 <script>
@@ -124,3 +127,35 @@
     }
   }
 </script>
+
+<style>
+   .slide-enter-active {
+        animation: slide-in 200ms ease-out forwards;
+    }
+
+    .slide-leave-active {
+        animation: slide-out 200ms ease-out forwards;
+    }
+
+    @keyframes slide-in {
+        from {
+            transform: translateY(-30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-out {
+        from {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-30px);
+            opacity: 0;
+        }
+    }
+</style>
